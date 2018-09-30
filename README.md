@@ -1,6 +1,6 @@
 # dali`s Blogs
 
-一个简单的，基于Bootstrap的Jellky博客主题，欢迎Star和[Fork](https://github.com/fastlearn/fastlearn.github.io/fork)
+一个简单的，基于 Bootstrap 的 Jellky 博客主题，欢迎 Star 和 [Fork](https://github.com/fastlearn/fastlearn.github.io/fork)
 
 [演示地址](https://renguangli.com)
 
