@@ -2,7 +2,7 @@
 
 一个简单的，基于Bootstrap的主题。
 
-## [演示地址](https://renguangli.com)
+[演示地址](https://renguangli.com)
 
 Open issues if you find bugs or even have trouble installing jekyll or dependencies. :D
 
