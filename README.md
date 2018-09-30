@@ -4,7 +4,9 @@
 
 [演示地址](https://renguangli.com)
 
-## 致谢
+[演示地址](https://renguangli.com)
+
+### 致   谢
 
 本Jellky主题基于 [Yummy-Jekyll](https://dongchuan.github.io) 修改而来，在此感谢[@DONGChuan](https://dongchuan.github.io)
 
