@@ -1,6 +1,10 @@
 # dali`s Blogs
 
 一个简单的，基于Bootstrap的主题。
+<button type="submit" class="btn btn-sm btn-with-count js-toggler-target" aria-label="Star this repository" title="Star fastlearn/fastlearn.github.io" data-ga-click="Repository, click star button, action:blob#show; text:Star">
+        <svg class="octicon octicon-star v-align-text-bottom" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74L14 6z"></path></svg>
+        Star
+      </button>
 
 [演示地址](https://renguangli.com)
 
