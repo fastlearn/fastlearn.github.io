@@ -1,8 +1,8 @@
-# Yummy Jekyll Theme
+# dali`s Blogs
 
-A Simple, Bootstrap Based Theme. Especially for developers who like to show their projects on website and like to take notes. There are also some magical features to discover. 
+一个简单的，基于Bootstrap的主题。
 
-## [Live Demo](http://dongchuan.github.io/)
+## [演示地址](https://renguangli.com)
 
 Open issues if you find bugs or even have trouble installing jekyll or dependencies. :D
 
