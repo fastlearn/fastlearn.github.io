@@ -4,13 +4,9 @@
 
 [演示地址](https://renguangli.com)
 
-Open issues if you find bugs or even have trouble installing jekyll or dependencies. :D
+![screenshot home](https://renguangli.com/assets/images/screenshots/home.png)
 
-Or contact: dongchuan55@gmail.com
-
-> Strongly suggest to fork and change project name to create your GitHub Pages instead of downloading it directly. Because in the future, I will develop many funny modules like 'footprint' to show your world wide trip. Could be easier to merge new features in the future.
-
-## Notable Features
+## 功能列表
 
 * Compatible with Jekyll 3.x and GitHub Pages
 * Based on Bootstrap
@@ -27,7 +23,7 @@ Features in future:
 * (Not sure) A embeded todo list. (Not sure) to travel, to complete, to do for your parents, etc. To do in life!
 * Creative ideas to discuss with you :P
 
-## Install and setup
+## fork指南
 
 Before using it, you may need [Bower](http://bower.io/) and [Bundler](http://bundler.io/) on your local to install dependencies.
 
