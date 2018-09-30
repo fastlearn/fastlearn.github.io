@@ -59,8 +59,4 @@ Fork 本项目之后，还需要做一些事情才能让你的页面「正确」
 
 ## License
 
-The Apache License 2.0
-
-Copyright (c) 2016 DONG Chuan
-
-Check [LICENSE](https://github.com/DONGChuan/DONGChuan.github.io/blob/master/LICENSE) file and [official website](http://www.apache.org/licenses/LICENSE-2.0) for details
+Apache License 2.0
