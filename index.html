@@ -43,11 +43,9 @@ css: ['index.css', 'sidebar-popular-repo.css']
                     </p>
                     <p class="post-list-meta">
                         <span class="octicon octicon-calendar"></span> {{ post.date | date: "%Y/%m/%d" }}
+                        <span class="octicon octicon-file-directory"></span>
                         {% for cat in post.categories %}
-                        <span class="meta-info">
-                            <span class="octicon octicon-file-directory"></span>
                             <a href="/categories/#{{ cat }}" title="{{ cat }}">{{ cat }}</a>
-                        </span>
                         {% endfor %}
                     </p>
                 </li>
