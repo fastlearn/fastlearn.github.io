@@ -1,10 +1,12 @@
+![screenshot home](https://renguangli.com/assets/images/screenshots/home.png)
+
 # dali`s Blogs
 
 一个简单的，基于Bootstrap的主题，欢迎fork和Star。
 
 [演示地址](https://renguangli.com)
 
-![screenshot home](https://renguangli.com/assets/images/screenshots/home.png)
+
 
 ## 功能列表
 
