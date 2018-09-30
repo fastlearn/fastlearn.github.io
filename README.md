@@ -1,12 +1,8 @@
-![screenshot home](https://renguangli.com/assets/images/screenshots/home.png)
-
 # dali`s Blogs
 
-一个简单的，基于Bootstrap的主题，欢迎fork和Star。
+一个简单的，基于Bootstrap的主题，欢迎<iframe src="https://ghbtns.com/github-btn.html?user=renguangli&repo=renguangli.github.io&type=star&count=false" frameborder="0" scrolling="0" width="170px" height="20px"></iframe><iframe src="https://ghbtns.com/github-btn.html?user=renguangli&repo=renguangli.github.io&type=fork&count=false" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>。
 
 [演示地址](https://renguangli.com)
-
-
 
 ## 功能列表
 
