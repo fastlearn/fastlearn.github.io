@@ -5,153 +5,164 @@ category: CSS
 tags: [css]
 ---
 
-Quick note about CSS animation. 
+## 简介
 
-## CSS Animation
+单例模式是常用的设计模式，其定义为确保一个类只有一个实例，并提供该实例的全局访问点。
 
-CSS3 animation lets an element gradually change from one style to another.
+一个类确保只有一个实例说明该类的实例只能在类内部创建，类外部不能通过new的方式创建该实例，这点可以将构造方法访问权限设置为private的来完成。
 
-Two steps:
 
-1. Use `@keyframes` to define an animation.
-2. Set this animation on an element with animation properties
+```
+private static Singleton instance;
 
-We could set properties one-by-one or with following shorthand:
+private Singleton(){}
+```
 
-{% highlight css %}
-animation: [animation-name] [animation-duration] [animation-timing-function] [animation-delay] [animation-iteration-count] [animation-direction] [animation-fill-mode] [animation-play-state];
-{% endhighlight %}
+那么外部如何获取该实例呢？
 
-## @keyframes
+只需要一个公有的获取该实例静态方法即可，像这样
 
-It defines what the animation looks like at each stage of the animation timeline. It is composed of:
+```
+public static Singleton getInstance() {
+    return instance;
+}
+```
 
-* Name of the animation. For example, changeColor.
-* Stages: From 0% to 100% to represent the whole process of animation
-* CSS Properties: The CSS properties defined for each stage of the animation timeline.
+## 代码实现
 
-Following example creates an animation called `changeColor` and assign it to `div:hover`:
+一般包含三个要素：  
+- 私有的静态变量 
+- 私有的构造函数，保证外部不能通过new的方式创建对象
+- 公有的获取该实例的静态方法，对外提供访问该对象的访问方法
 
-{% highlight css %}
-@keyframes changeColor {
-  0% {
-    background: red;
-  }
-  60% {
-    background: blue;
-  }
-  100%{
-    background: green;
-  }
+### 懒汉式单例模式（线程不安全-延迟加载）
+
+懒汉式就是应用刚启动的时候不创建实例，当外部调用获取该类的实例方法时才创建。  
+实例被延迟加载，这样做的好处是，如果没有用到该类，那么静态变量instance就不会被实例化，从而节省资源。  
+懒汉式单例模式是线程不安全的，在多线程环境下instance可能会被多次实例化。
+
+``` java
+/**
+ * Singleton 懒汉式单例模式（线程不安全-延迟加载）
+ */
+public class Singleton {
+    private static Singleton instance;
+    private Singleton(){}
+    public static Singleton getInstance() {
+        if (instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+}
+```
+
+### 懒汉式单例模式（线程安全-延迟加载）
+
+对getInstance()方法加锁之后，同一时间只有一个线程访问该方法，这样就避免了instance被多次实例化。
+getInstance()方法由于加了synchronized关键字，当有一个线程获得锁并访问该方法时，其他线程处于阻塞状态，一定程度上对性能有所损耗。
+
+``` java
+/**
+ * Singleton 懒汉式单例模式（线程安全-延迟加载）
+ */
+public class Singleton {
+    private static Singleton instance;
+    private Singleton(){}
+    public static synchronized Singleton getInstance() {
+        if (instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+}
+```
+
+### 饿汉式单例模式（线程安全）
+
+饿汉式就是应用刚启动的时候，不管外部有没有调用该类的实例方法，该类的实例就已经创建好了。
+
+这是我最喜欢的一种单例模式写法，简单、高效，也没有线程安全问题。
+
+``` java
+/** 
+ * Singleton 饿汉式单例模式（线程安全）
+ */
+public class Singleton {
+    private static Singleton instance = new Singleton();
+    private Singleton(){}
+    public static Singleton getInstance() {
+        return instance;
+    }
+}
+```
+
+### 双重校验锁单例模式（线程安全-延迟加载）
+
+``` java
+/**
+ * Singleton 双重校验锁单例模式（线程安全-延迟加载）
+ *
+ */
+public class Singleton {
+    private static volatile Singleton instance;
+    private Singleton(){}
+    public static Singleton getInstance() {
+        if (instance == null) {
+            synchronized (Singleton.class) {
+                if (instance == null) {
+                    instance = new Singleton();
+                }
+            }
+        }
+        return instance;
+    }
 }
 
-div:hover{
-  animation: changeColor 5s ease .1s;
+```
+在进入synchronized块之前加入判空逻辑，只有instance在没有被实例化之前才进入同步块，instance实例化之后就不会在进入同步块里了，效率当然也会提高。
+
+是否有必要加volatile关键字？
+
+我们都知道instance = new Singleton()这段代码是分三步运行的  
+1、分配内存空间  
+2、实例化对象  
+3、将instance指向分配的内存地址
+
+由于 JVM 具有指令重排的特性，有可能执行顺序变为了 1>3>2，这在单线程情况下自然是没有问题。但如果是多线程下，有可能获得是一个还没有被初始化的实例，以致于程序运行出错。
+
+使用 volatile 可以禁止指令重排，保证在多线程环境下也能正常运行。所以还是有必要加上volatile关键字的。
+
+### 静态内部类实现(线程安全-延迟加载)
+
+``` java
+/**
+ * Singleton 静态内部单例模式(线程安全-延迟加载)
+ */
+public class Singleton {
+    private static class SingletonHolder{
+        private static Singleton instance = new Singleton();
+    }
+    private Singleton(){}
+    public static Singleton getInstance() {
+        return SingletonHolder.instance;
+    }
 }
-{% endhighlight %}
+```
+由于静态内部类的特性，只有在其被第一次引用的时候才会被加载，所以可以保证其线程安全性。
 
-> In above example, we could also use `from` to represent `0%` and `to` to represent `100%`
+由于在调用 SingletonHolder.instance 的时候，才会对单例进行初始化，而且通过反射是不能从外部类获取内部类的属性的。
+所以这种形式，很好的避免了反射入侵。
 
-## Animation Properties
+### 基于枚举实现的单例模式
 
-It has following properties: 
-
-1. animation-name
-2. animation-duration
-3. animation-timing-function
-4. animation-delay
-5. animation-iteration-count
-6. animation-direction
-7. animation-fill-mode
-8. animation-play-state
-
-### animation-name
-
-The name of the animation, defined in the @keyframes.
-
-### animation-duration
-
-The duration of the animation, in seconds (e.g., 5s) or milliseconds (e.g., 200ms).
-
-### animation-timing-function
-
-The speed curve or pace of the animation:
-
-| Timing Function | Description |
-|---|---|
-| linear | The animation has the same speed from start to end |
-| ease | **Default value**. The animation has a slow start, then fast, before it ends slowly. |
-| ease-in | Start slowly and end fast.  |
-| ease-out | Start more quickly than linear ones and end slowly. The opposite of ease-in. |
-| ease-in-out | Both a slow start and a slow end |
-| initial | Sets this property to its default value. So `ease`. |
-| inherit | Inherits this property from its parent element. |
-
-> Check [The basics of easing](https://developers.google.com/web/fundamentals/design-and-ui/animations/the-basics-of-easing?hl=en) for details.
-
-### animation-delay 
-
-It specifies when the animation will start. The value is defined in seconds (s) or milliseconds (mil).
-
-### animation-iteration-count
-
-It specifies the number of times that the animation will play. The possible values are:
-
-* a specific number of iterations (default is 1)
-* `infinite` - repeats forever
-* `initial`
-* `inherit`
-
-### animation-direction
-
-It specifies whether the animation should play forward, reverse, or in alternate cycles.
-
-* `normal` - Default. On each cycle the animation resets to the beginning state (0%) and plays forward again (to 100%).
-
-* `reverse` - On each cycle the animation resets to the end state (100%) and plays backwards (to 0%).
-
-* `alternate` - On each odd cycle, the animation plays forward (0% to 100%). On each even cycle, the animation plays backwards (100% to 0%).
-
-* `alternate-reverse` - On each odd cycle, the animation plays in reverse (100% to 0%). On each even cycle, the animation plays forward (0% or 100%).
-
-### animation-fill-mode
-
-It specifies if the animation styles are visible before or after the animation plays. 
-
-* `normal` - Default. The animation does not apply any styles to the element, before or after the animation.
-
-* `forwards` - After the animation is finished, the styles defined in the final keyframe (100%) are retained by the element.
-
-* `backwards` - Before the animation (during the animation delay), the styles of the initial keyframe (0%) are applied to the element.
-
-* `both` - `forwards` with `backwards`.
-
-### animation-play-state
-
-Two values: `running` and `paused`.
-
-It specifies whether the animation is `playing` or `paused`. **Resuming a paused animation starts the animation where it was left off. But if pause an animation, the element style will return back to its origin.**
-
-Example:
-
-{% highlight css %}
-div:hover {
-  animation-play-state: paused;
+``` java
+/**
+ * 枚举实现的单例模式(线程安全)
+ */
+public enum  Singleton {
+    INSTANCE;
 }
-{% endhighlight %}
+```
 
-## Multiple Animations
-
-Add multiple animations to a selector with comma:
-
-{% highlight css %}
-div {
-  animation: animationA 2s, animationB 2s;
-}
-{% endhighlight %}
-
-## Refs
-
-* [Imooc 十天精通CSS3](http://www.imooc.com/learn/33)
-* [CSS Animation for Beginners](https://robots.thoughtbot.com/css-animation-for-beginners#animation-iteration-count)
-* [CSS3 animation-timing-function Property](http://www.w3schools.com/cssref/css3_pr_animation-timing-function.asp)
+这是 Effective Java 极力推荐的一种，代码为各种实现中最简单的,其实现，完全是基于枚举类的特性，可以说天生受到了 JVM 的支持，而且既不用思考反射，也不用考虑多线程。
