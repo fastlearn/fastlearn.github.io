@@ -154,6 +154,10 @@
     font-size: 25px;
 }
 
+.post-list-title {
+    font-size: 25px;
+}
+
 .post-list-title a {
     text-decoration: none;
 }
